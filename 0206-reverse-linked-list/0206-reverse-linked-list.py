@@ -5,13 +5,24 @@
 #         self.next = next
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        # Time Complexity O(n), Memory Complexity O(n)
-        prev, current = None, head
+        values = []
+        sol = ListNode()
 
-        while current:
-            # stores current.next in temporary variable
-            nxt = current.next
-            current.next = prev # set next to reversed values 
-            prev = current # sets previous to reversed list up to the current iteration
-            current = nxt # sets current back to original linked list for the next loop
-        return prev
+        trail = sol
+        curr = head
+        while curr != None:
+            values.append(curr.val)
+            curr = curr.next
+            trail.next = ListNode()
+            trail = trail.next
+
+        values.reverse()
+
+        curr = sol.next
+        index = 0
+        while curr != None:
+            curr.val = values[index]
+            index += 1
+            curr = curr.next 
+
+        return sol.next
