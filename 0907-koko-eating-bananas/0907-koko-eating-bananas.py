@@ -1,17 +1,27 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        left, right = 1, max(piles)
-        print(f"Initial left: {left}, Initial right: {right}")
-        while left < right:
-            mid = left + (right - left) // 2
-            print(f"mid: {mid}")
-            hours = sum((pile - 1) // mid + 1 for pile in piles)
-            if hours <= h:
-                print(f"Current mid: {mid}, Total hours: {hours}, Adjusting right boundary")
-                right = mid
-            else:
-                print(f"Current mid: {mid}, Total hours: {hours}, Adjusting left boundary")
-                left = mid + 1
+        def can_finish(piles, speed, h):
+            print("Checking if it is possible to finish all the piles in {} seconds with a speed of {}".format(h, speed))
+            time = 0
+            for pile in piles:
+                time += -(-pile // speed)  # Equivalent to ceil(pile / speed)
+                if time > h:
+                    print("It is not possible to finish all the piles in {} seconds with a speed of {}".format(h, speed))
+                    return False
+            print("It is possible to finish all the piles in {} seconds with a speed of {}".format(h, speed))
+            return True
+        
+        print("Finding the minimum eating speed...")
+        start = 1
+        end = max(piles)
 
-        print(f"Final minimum eating speed: {left}")
-        return left
+        while start < end:
+            mid = start + (end - start) // 2
+            print("Checking if it is possible to finish all the piles in {} seconds with a speed of {}".format(h, mid))
+            if can_finish(piles, mid, h):
+                end = mid
+            else:
+                start = mid + 1
+
+        print("The minimum eating speed is {}".format(start))
+        return start
