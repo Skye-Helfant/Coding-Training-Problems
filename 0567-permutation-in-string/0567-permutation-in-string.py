@@ -13,10 +13,16 @@ class Solution:
             for char in s2[l:r]:
                 s2_count[char] = s2_count.get(char, 0) + 1
 
+            print("s1_count:", s1_count)
+            print(f"r: {r}, l: {l}")
+            print("s2_count:", s2_count)
+
             if s1_count == s2_count:
+                print("Found permutation!")
                 return True
 
             l += 1
             r += 1
 
+        print("Permutation not found.")
         return False
